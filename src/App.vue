@@ -15,7 +15,6 @@
 <script>
 import SplashScreen from "./components/SplashScreen.vue";
 import { defineAsyncComponent } from "vue";
-
 export default {
   components: {
     SplashScreen,
@@ -27,9 +26,7 @@ export default {
       })
     )
   }
-
 }
-
 </script>
 
 <style>
