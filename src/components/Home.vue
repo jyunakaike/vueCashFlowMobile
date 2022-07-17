@@ -7,10 +7,16 @@
             <Resume 
                 :total-label="'Ahorro total'"
                 :label="label"
-                :total-amount="1000000"
+                :total-amount="1000"
                 :amount="amount"
-            />
-
+            >
+                <template #graphic>
+                    graphic
+                </template>
+                <template #action>
+                    action
+                </template>
+            </Resume>
         </template>
         <template #movements>
             <Movements />
