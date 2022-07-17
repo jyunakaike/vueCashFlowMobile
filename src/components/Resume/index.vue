@@ -46,8 +46,8 @@ export default {
         }
     },
 };
-
 </script>
+
 <style scoped>
 main {
     display: flex;
