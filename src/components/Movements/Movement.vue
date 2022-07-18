@@ -40,13 +40,12 @@ const props = defineProps({
 const { id, title, description, amount } = toRefs(props);
 
 const amountCurrency = computed(
-    () => currencyFormatter.format(amount.value) 
+    () => currencyFormatter.format(amount.value)
 );
 
 const isNegative = computed(() => amount.value < 0);
 
 const emit = defineEmits(["remove"]);
-
 const remove = () => {
     emit("remove", id.value);
 }

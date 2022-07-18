@@ -31,12 +31,12 @@
             />
         </svg>
         <p>Últimos 30 días</p>
-        <div>{{ zero }}</div>
+        <!-- <div>{{ amounts }}</div> -->
     </div>
 </template>
 
 <script setup>
-import { ref, toRefs, defineProps, computed } from 'vue';
+import { ref, toRefs, defineProps, defineEmits , computed } from 'vue';
 const props = defineProps({
     amounts: {
         type: Array,
@@ -64,6 +64,7 @@ const points = computed(() => {
 });
 const showPointer = ref(false);
 const pointer = ref(0);
+
 const tap = ({ target, touches }) => {
     showPointer.value = true;
     const elementWidth = target.getBoundingClientRect().width;
