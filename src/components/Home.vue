@@ -4,14 +4,9 @@
             <Header></Header>
         </template>
         <template #resume>
-            <Resume 
-                :total-label="'Ahorro total'"
-                :label="label"
-                :total-amount="1000"
-                :amount="amount"
-            >
+            <Resume :total-label="'Ahorro total'" :label="label" :total-amount="1000" :amount="amount">
                 <template #graphic>
-                    <Graphic />
+                    <Graphic :amounts="amounts" />
                 </template>
                 <template #action>
                     <Action />
@@ -19,9 +14,7 @@
             </Resume>
         </template>
         <template #movements>
-            <Movements 
-                :movements="movements"
-            />
+            <Movements :movements="movements" />
         </template>
     </Layout>
 </template>
@@ -39,7 +32,7 @@ export default {
         Layout,
         Header,
         Resume,
-        Action, 
+        Action,
         Movements,
         Graphic,
     },
@@ -47,6 +40,7 @@ export default {
         return {
             label: null,
             amount: null,
+            amounts: [100, 200, 500, -400, -600, -300, 0, 300, 500],
             movements: [{
                 id: 0,
                 title: "Movimiento 1",
@@ -62,7 +56,7 @@ export default {
                 title: "Movimiento 2",
                 description: "Lorem ipsum",
                 amount: 1000,
-            },{
+            }, {
                 id: 3,
                 title: "Movimiento 3",
                 description: "Lorem ipsum",
