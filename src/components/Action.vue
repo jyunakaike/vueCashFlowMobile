@@ -45,11 +45,9 @@ const movementType= ref("Ingreso");
 
 const submit = () =>{
     showModal.value = !showModal.value;
-    
 }
 
 </script>
-
 
 <style scoped>
 button {
