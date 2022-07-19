@@ -4,7 +4,12 @@
             <Header></Header>
         </template>
         <template #resume>
-            <Resume :total-label="'Ahorro total'" :label="label" :total-amount="1000" :amount="amount">
+            <Resume 
+                :total-label="'Ahorro total'" 
+                :label="label" 
+                :total-amount="totalAmount" 
+                :amount="amount"
+            >
                 <template #graphic>
                     <Graphic :amounts="amounts" />
                 </template>
@@ -40,70 +45,11 @@ export default {
         return {
             label: null,
             amount: null,
-            // amounts: [100, 200, 500, -400, -600, -300, 0, 300, 500],
-            movements: [{
-                id: 0,
-                title: "Movimiento 1",
-                description: "Lorem ipsum",
-                amount: 100,
-                time: new Date("07-01-2022"),
-
-            }, {
-                id: 1,
-                title: "Movimiento 2",
-                description: "Lorem ipsum",
-                amount: 200,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 2,
-                title: "Movimiento 2",
-                description: "Lorem ipsum",
-                amount: 500,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 3,
-                title: "Movimiento 3",
-                description: "Lorem ipsum",
-                amount: 200,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 4,
-                title: "Movimiento 4",
-                description: "Lorem ipsum",
-                amount: -400,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 5,
-                title: "Movimiento 5",
-                description: "Lorem ipsum",
-                amount: -600,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 6,
-                title: "Movimiento 6",
-                description: "Lorem ipsum",
-                amount: -300,
-                time: new Date("07-01-2022"),
-            }, {
-                id: 7,
-                title: "Movimiento 7",
-                description: "Lorem ipsum",
-                amount: 100,
-                time: new Date("07-01-2022"),
-            },
-            {
-                id: 8,
-                title: "Movimiento 8",
-                description: "Lorem ipsum",
-                amount: 100,
-                time: new Date("06-01-2022"),
-            },
-            ]
-        }
+            movements: [],
+        };
     },
     computed: {
         amounts() {
-            // lista que traiga todos los elementos menos de 30 dias 
             const lastDays = this.movements
                 .filter(m => {
                     const today = new Date();
@@ -111,23 +57,41 @@ export default {
                     return m.time > oldDate
                 })
                 .map(m => m.amount)
-
             return lastDays.map((m, i) => {
-                const lastMovements = lastDays.slice(0, i)
+                const lastMovements = lastDays.slice(0, i);
                 return lastMovements.reduce((suma, movement) => {
                     return suma + movement
-                }, 0)
-            })
+                }, 0);
+            });
+        },
+        totalAmount() {
+            return this.movements.reduce((suma, m) => {
+                return suma + m.amount;
+            }, 0);
+        }
+    },
+    mounted() {
+        const movements = JSON.parse(localStorage.getItem("movements"));
+        console.log(movements);
 
+        if (Array.isArray(movements)) {
+            this.movements = movements.map(m => {
+                return { ...m, time: new Date(m.time) };
+            })
         }
     },
     methods: {
         create(movement) {
-            this.movements.push(movement)
+            this.movements.push(movement);
+            this.save();
         },
         remove(id) {
             const index = this.movements.findIndex(m => m.id === id)
             this.movements.splice(index, 1);
+            this.save();
+        },
+        save() {
+            localStorage.setItem("movements", JSON.stringify(this.movements));
         }
     }
 }
